@@ -1,0 +1,59 @@
+{% extends 'web/base.html' %}
+{% block content %}
+
+    <form action="">
+        <b>Фильтры:</b><br>
+
+        {% for field in filter_form %}
+            {{ field.label }}
+            {{ field }}
+        {% endfor %}
+
+        <button>Найти</button>
+
+        <a href="?">Показать всё</a>
+    </form>
+
+    <ul>
+        {% for post in posts %}
+            <li>
+                <a href="{% url 'posts_edit' post.id %}"><b>{{ post.title }}</b></a>
+                {% if post.user.id == user.id %}
+                    <a href="{% url 'posts_delete' post.id %}">удалить</a>
+                {% endif %}
+                <br>
+                [{% if post.opened %}АКТУАЛЬНО{% else %}неактуально{% endif %}, {{ post.post_date }}]
+                <br>
+                <small>
+                    Периода передержки: {{ post.start_date }} – {{ post.end_date }}
+                    <br>
+                    <em>Питомцы:</em>
+                    <ul>
+                        {% for pet in post.pets.all %}
+                            <li>{{ pet.name }}</li>
+                        {% endfor %}
+                    </ul>
+                    За <em>{{ post.price }}р.</em>
+                    <br>
+                    Пишите: <em>{{ post.user.email }}</em>
+                </small>
+            </li>
+        {% endfor %}
+    </ul>
+
+    Всего {{ total_count }} записей. {{ posts|length }} на этой странице.
+    <nav>
+        {% if posts.has_previous %}
+            <a href="?page=1">в начало</a>
+            <a href="?page={{ posts.previous_page_number }}">предыдующая страница</a>
+        {% endif %}
+
+        страница {{ posts.number }} из {{ posts.paginator.num_pages }}
+
+        {% if posts.has_next %}
+            <a href="?page={{ posts.next_page_number }}">следующая страница</a>
+            <a href="?page={{ posts.paginator.num_pages }}">в конец</a>
+        {% endif %}
+    </nav>
+
+{% endblock %}

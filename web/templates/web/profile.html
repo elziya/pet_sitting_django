@@ -1,0 +1,16 @@
+{% extends 'web/base.html' %}
+{% block content %}
+    <h2>Профиль</h2>
+    <h3> @{{ user.username }}: {{ user.first_name }} {{ user.last_name }}</h3>
+    <h4>Email: {{ user.email }}</h4>
+    <h4>Питомцы:</h4>
+    <ul>
+        {% for pet in items %}
+            <li>
+                {{ pet.name }}
+                <em>{{ pet.description }}</em>
+                <small><a href="{% url 'pets_edit' pet.id %}">редактировать</a></small>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

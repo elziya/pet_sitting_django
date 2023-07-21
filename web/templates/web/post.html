@@ -1,0 +1,23 @@
+{% extends 'web/base.html' %}
+{% block content %}
+
+    <h2><b>{{ post.title }}</b></h2>
+    [{% if post.opened %}АКТУАЛЬНО{% else %}неактуально{% endif %}, {{ post.post_date }}]
+    <br>
+    Периода передержки: {{ post.start_date }} – {{ post.end_date }}
+    <br>
+    <br>
+    {{ post.content }}
+    <br>
+    <br>
+    <em>Питомцы:</em>
+    <ul>
+        {% for pet in post.pets.all %}
+            <li>{{ pet.name }}</li>
+        {% endfor %}
+    </ul>
+    Предлагаемая оплата: <em>{{ post.price }}р.</em>
+    <br>
+    Пишите: <em>{{ post.user.email }}</em>
+
+{% endblock %}

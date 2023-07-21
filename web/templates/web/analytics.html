@@ -1,0 +1,35 @@
+{% extends 'web/base.html' %}
+{% block content %}
+    <h2>Аналитика</h2>
+    <ul>
+        <li>Всего <b>{{ overall_stat.count }}</b> актуальных постов</li>
+        <li>Крайняя дата начала передержки: {{ overall_stat.min_date }}</li>
+        <li>Крайняя дата окончания передержки: {{ overall_stat.max_date }}</li>
+        <li>Среднее время передержки: {{ overall_stat.avg_time }}</li>
+        <li>Средняя предлагаемая оплата: {{ overall_stat.avg_price|floatformat:0 }}</li>
+        <li>Среднее число питомцев в одном посте: {{ overall_stat.avg_pets_num|floatformat:0 }}</li>
+    </ul>
+
+    <h3><b>Статистика по времени передержки:</b></h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th><b>Время передержки</b></th>
+                <th>Количество постов</th>
+                <th>Средняя предлагаемая оплата</th>
+                <th>Среднее число питомцев</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for day_stat in days_stat %}
+                <tr>
+                    <td><b>{{ day_stat.days_num }}</b></td>
+                    <td>{{ day_stat.count }}</td>
+                    <td>{{ day_stat.avg_price|floatformat:0 }}</td>
+                    <td>{{ day_stat.avg_pets_num|floatformat:0 }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Pet Sitting</title>
+</head>
+<body>
+    <h1><a href="{% url 'main' %}">Pet Sitting</a></h1>
+    <nav>
+        {% if user.is_anonymous %}
+            <div style="text-align: right">
+                <a href="{% url 'registration' %}">Регистрация</a>
+                <a href="{% url 'auth' %}">Авторизация</a>
+            </div>
+        {% else %}
+            <a href="{% url 'main' %}">Главная</a>
+            <a href="{% url 'profile' %}">Профиль</a>
+            <a href="{% url 'posts_add' %}">Создать пост</a>
+            <a href="{% url 'analytics' %}">Аналитика</a>
+            <a href="{% url 'pets_add' %}">Добавить питомца</a>
+            <div style="text-align: right">
+                {% if not user.is_anonymous %}
+                    Вы авторизованы как <b>{{ user.username }}</b>
+                {% endif %}
+                <a href="{% url 'logout' %}">Выход</a>
+            </div>
+        {% endif %}
+    </nav>
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>
